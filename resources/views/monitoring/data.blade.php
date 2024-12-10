@@ -1,76 +1,117 @@
-<!-- resources/views/monitoring/data.blade.php -->
+@extends('layouts.index')
 
-<h1>Data Monitoring</h1>
+@section('title', 'Monitoring Data')
 
-<!-- Tambahkan tag canvas untuk grafik -->
-<div class="card">
-    <canvas id="monitoringChart" width="400" height="200"></canvas>
-</div>
+@section('content')
+    <h1>Data Monitoring</h1>
 
-<!-- Tabel untuk menampilkan data monitoring -->
-<table>
-    <thead>
-        <tr>
-            <th>Device ID</th>
-            <th>Parameter</th>
-            <th>Value</th>
-            <th>Timestamp</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($data as $item)
+    <div class="chart-container">
+        <!-- Chart Temperature -->
+        <div class="card">
+            <h2>Temperature</h2>
+            <canvas id="temperatureChart" width="350" height="175"></canvas>
+        </div>
+
+        <!-- Chart Humidity -->
+        <div class="card">
+            <h2>Humidity</h2>
+            <canvas id="humidityChart" width="350" height="175"></canvas>
+        </div>
+
+        <!-- Chart Light Intensity -->
+        <div class="card">
+            <h2>Light Intensity</h2>
+            <canvas id="lightIntensityChart" width="350" height="175"></canvas>
+        </div>
+    </div>
+
+    <!-- Tabel untuk menampilkan data monitoring -->
+    <table>
+        <thead>
             <tr>
-                <td>{{ $item->device_id }}</td>
-                <td>{{ $item->parameter }}</td>
-                <td>{{ $item->value }}</td>
-                <td>{{ $item->created_at }}</td>
+                <th>Device ID</th>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Timestamp</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($data as $item) <!-- Gunakan $data yang sudah dikirim dari controller -->
+                <tr>
+                    <td>{{ $item->device_id }}</td>
+                    <td>{{ $item->parameter }}</td>
+                    <td>{{ $item->value }}</td>
+                    <td>{{ $item->created_at }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endsection
 
-<!-- Tambahkan script untuk grafik -->
+<!-- Script untuk grafik -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Ambil data dari tabel
-    const data = @json($data);
+    const data = @json($data); // Mengambil data dari controller
 
-    // Siapkan data untuk grafik
-    const labels = data.map(item => new Date(item.created_at).toLocaleString());
-    const dataValues = data.map(item => item.value);
+    // Filter data berdasarkan parameter
+    const temperatureData = data.filter(item => item.parameter === 'temperature');
+    const humidityData = data.filter(item => item.parameter === 'humidity');
+    const lightIntensityData = data.filter(item => item.parameter === 'light intensity');
 
-    // Dapatkan konteks dari canvas
-    const ctx = document.getElementById('monitoringChart').getContext('2d');
-    const monitoringChart = new Chart(ctx, {
-        type: 'line', // Jenis grafik
-        data: {
-            labels: labels, // Label untuk sumbu X
-            datasets: [{
-                label: 'Parameter Value',
-                data: dataValues, // Data untuk sumbu Y
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Timestamp'
-                    }
+    // Siapkan data untuk masing-masing grafik
+    const temperatureLabels = temperatureData.map(item => new Date(item.created_at).toLocaleString());
+    const temperatureValues = temperatureData.map(item => item.value);
+
+    const humidityLabels = humidityData.map(item => new Date(item.created_at).toLocaleString());
+    const humidityValues = humidityData.map(item => item.value);
+
+    const lightIntensityLabels = lightIntensityData.map(item => new Date(item.created_at).toLocaleString());
+    const lightIntensityValues = lightIntensityData.map(item => item.value);
+
+    // Fungsi untuk membuat grafik
+    function createChart(ctx, label, labels, dataValues, color) {
+        return new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: dataValues,
+                    backgroundColor: color + '0.2)',
+                    borderColor: color + '1)',
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
                 },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Value'
+                scales: {
+                    x: {
+                        display: false
                     },
-                    beginAtZero: true
+                    y: {
+                        display: false,
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+
+    // Buat grafik untuk temperature
+    const temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
+    createChart(temperatureCtx, 'Temperature', temperatureLabels, temperatureValues, 'rgba(255, 99, 132, ');
+
+    // Buat grafik untuk humidity
+    const humidityCtx = document.getElementById('humidityChart').getContext('2d');
+    createChart(humidityCtx, 'Humidity', humidityLabels, humidityValues, 'rgba(54, 162, 235, ');
+
+    // Buat grafik untuk light intensity
+    const lightIntensityCtx = document.getElementById('lightIntensityChart').getContext('2d');
+    createChart(lightIntensityCtx, 'Light Intensity', lightIntensityLabels, lightIntensityValues, 'rgba(255, 206, 86, ');
 </script>

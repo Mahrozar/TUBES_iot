@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2840c8cec80d5eb4489891d403623c5",
+    "content-hash": "5d89bbedd224096bda3d61510a753e7f",
     "packages": [
         {
             "name": "brick/math",
@@ -3115,6 +3115,91 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "simps/mqtt",
+            "version": "v1.4.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simps/mqtt.git",
+                "reference": "961ba5615e06786b82c5d85c967e4c29e8b7490e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simps/mqtt/zipball/961ba5615e06786b82c5d85c967e4c29e8b7490e",
+                "reference": "961ba5615e06786b82c5d85c967e4c29e8b7490e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^8.5",
+                "simps/mqtt-cli": "*",
+                "swoole/ide-helper": ">=4.4.20"
+            },
+            "suggest": {
+                "ext-swoole": "The ext-swoole >= v4.4.20 or v4.5.3 needs to be loaded when using the MQTT Client."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/constants.php"
+                ],
+                "psr-4": {
+                    "Simps\\MQTT\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Lu Fei",
+                    "email": "lufei@simps.io"
+                }
+            ],
+            "description": "MQTT Protocol Analysis and Coroutine Client for PHP",
+            "keywords": [
+                "client",
+                "coroutine",
+                "mqtt",
+                "mqtt3.1",
+                "mqtt5.0",
+                "mqtt_client",
+                "mqtt_protocol",
+                "php",
+                "simps",
+                "swoole"
+            ],
+            "support": {
+                "issues": "https://github.com/simps/mqtt/issues",
+                "source": "https://github.com/simps/mqtt/tree/v1.4.6"
+            },
+            "funding": [
+                {
+                    "url": "https://donate.qq52o.me",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/simps",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/sy-records",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-11-14T23:52:38+00:00"
         },
         {
             "name": "symfony/clock",

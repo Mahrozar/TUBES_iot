@@ -1,0 +1,41 @@
+.chart-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.chart-container .full-width {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+}
+.card {
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #ffffff;
+    text-align: center;
+}
+.card h2 {
+    font-size: 1em;
+}
+.table-container {
+    max-height: 200px; /* Batasi tinggi tabel */
+    overflow-y: auto; /* Aktifkan scroll vertikal */
+    border: 1px solid #ddd; /* Tambahkan border agar tabel lebih rapi */
+    border-radius: 8px; /* Buat sudut tabel sedikit melengkung */
+}
+table {
+    width: 100%; /* Pastikan tabel mengisi container */
+    border-collapse: collapse;
+}
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Garis bawah pada setiap baris */
+}
+th {
+    background-color: #f4f4f4; /* Warna latar belakang header tabel */
+    position: sticky;
+    top: 0; /* Tetap di atas saat scroll */
+}
