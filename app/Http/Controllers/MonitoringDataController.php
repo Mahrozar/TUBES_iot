@@ -25,7 +25,7 @@ class MonitoringDataController extends Controller
         // Validasi data yang diterima
         $validatedData = $request->validate([
             'device_id' => 'required|string',
-            'parameter' => 'required|string|in:temperature,humidity,light intensity',
+            'parameter' => 'required|string|in:temperature,humidity,ldr',
             'value' => 'required|numeric',
             'created_at' => 'nullable|date', // Optional
         ]);
