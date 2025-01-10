@@ -14,13 +14,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route untuk menyimpan data monitoring
-Route::post('/monitoring-data', [MonitoringDataController::class, 'store']);
+// Route untuk menampilkan data monitoring dari API eksternal
+Route::get('/monitoring-data', [DataController::class, 'showMonitoringData']);  // Untuk mendapatkan data dari API eksternal
 
-// Route untuk menampilkan data monitoring dari database
-Route::get('/monitoring-data', [MonitoringDataController::class, 'index']);
-
-// Route untuk mengambil data monitoring dari API eksternal
-Route::get('/monitoring-data', [DataController::class, 'showMonitoringData']);
-Route::post('/monitoring-data', [DataController::class, 'showMonitoringData']);
-
+// Route untuk menyimpan data monitoring (jika diperlukan)
+// Anda dapat menambahkan route ini jika ingin menambahkan fungsi untuk menyimpan data
+// Route::post('/monitoring-data', [DataController::class, 'store']); 

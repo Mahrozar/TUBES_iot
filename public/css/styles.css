@@ -11,6 +11,7 @@ h1,
 h2 {
     text-align: center;
 }
+
 /* Menengahkan tabel */
 .table-container table {
     margin: 0 auto;
@@ -18,9 +19,10 @@ h2 {
 
 body {
     font-family: "Poppins", sans-serif; /* Font modern dan menarik */
-    background-color: #f4f4f9;
+    background-color: #f7f9fc;
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* Header */
@@ -29,10 +31,11 @@ body {
     padding: 20px;
     background: linear-gradient(90deg, #007bff, #0056b3); /* Warna gradien */
     color: #fff;
-    margin-bottom: 20px;
-    font-size: 2rem; /* Ukuran font besar */
+    margin-bottom: 30px;
+    font-size: 2.5rem; /* Ukuran font lebih besar */
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Efek bayangan pada teks */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); /* Efek bayangan pada teks */
+    border-radius: 0 0 10px 10px; /* Menambahkan sudut melengkung */
 }
 
 /* Konten Utama */
@@ -42,29 +45,40 @@ body {
     padding: 20px;
 }
 
+/* Chart Container */
 .chart-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
-    justify-content: space-around;
+    justify-content: center; /* Rapi untuk ukuran layar yang lebih kecil */
     margin-bottom: 30px;
 }
 
 .card {
+    flex: 1 1 calc(25% - 20px); /* Responsif dengan ukuran minimum */
+    max-width: 300px;
     padding: 15px;
     border: 1px solid #ddd;
     background: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Container tabel dengan scrolling */
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Tabel Container dengan Scrolling */
 .table-container {
-    max-height: 200px; /* Sesuaikan tinggi maksimum (5 baris) */
+    max-height: 300px; /* Tinggi maksimum lebih besar */
     overflow-y: auto;
     margin-top: 20px;
-    border: 1px solid #ddd; /* Tambahkan batas untuk tabel */
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Tabel */
@@ -76,27 +90,35 @@ table {
 
 table th,
 table td {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     text-align: left;
-    font-family: "Roboto", sans-serif; /* Font tabel berbeda untuk variasi */
-    font-size: 0.9rem;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.95rem;
 }
 
 table th {
-    background: linear-gradient(90deg, #007bff, #0056b3); /* Warna gradien */
+    background: linear-gradient(90deg, #007bff, #0056b3);
     color: #fff;
     font-weight: bold;
-    text-transform: uppercase; /* Semua huruf kapital */
+    text-transform: uppercase;
+    position: sticky;
+    top: 0; /* Sticky header */
+    z-index: 1;
 }
 
 table td {
-    color: #444;
+    color: #555;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 /* Efek hover pada baris tabel */
 table tr:hover {
-    background: #eaf2ff; /* Warna hover lebih terang */
+    background: #eaf2ff;
+    transition: background 0.2s ease;
 }
 
 /* Footer */
@@ -105,9 +127,10 @@ table tr:hover {
     padding: 15px;
     background: #0056b3;
     color: #fff;
-    margin-top: 20px;
-    font-size: 1rem;
-    font-style: italic; /* Memberikan gaya miring */
+    margin-top: 30px;
+    font-size: 1.1rem;
+    font-style: italic;
+    border-radius: 10px 10px 0 0;
 }
 
 /* Notifikasi */
@@ -116,13 +139,13 @@ table tr:hover {
     top: 20px;
     right: 20px;
     padding: 15px 20px;
-    background: #28a745; /* Warna hijau untuk notifikasi */
+    background: #28a745;
     color: white;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
     transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
     font-weight: bold;
     font-family: "Poppins", sans-serif;
 }
@@ -137,5 +160,17 @@ table tr:hover {
     color: #007bff;
     transition: color 0.3s ease;
     font-weight: bold;
-    letter-spacing: 0.5px; /* Menambahkan jarak antar huruf */
+    letter-spacing: 0.5px;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .chart-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .card {
+        max-width: 100%;
+    }
 }

@@ -36,13 +36,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $item) <!-- Gunakan $data yang sudah dikirim dari controller -->
-                <tr>
-                    <td>{{ $item->device_id }}</td>
-                    <td>{{ $item->parameter }}</td>
-                    <td>{{ $item->value }}</td>
-                    <td>{{ $item->created_at }}</td>
-                </tr>
+            @foreach ($data as $parameter => $items) <!-- Loop berdasarkan parameter -->
+                @foreach ($items as $item) <!-- Loop berdasarkan item per parameter -->
+                    <tr>
+                        <td>{{ $item['device_id'] }}</td>
+                        <td>{{ ucfirst($parameter) }}</td> <!-- Menampilkan nama parameter, seperti 'temperature' atau 'humidity' -->
+                        <td>{{ $item['value'] }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item['created_at'])->toFormattedDateString() }}</td>
+                    </tr>
+                @endforeach
             @endforeach
         </tbody>
     </table>
@@ -51,13 +53,13 @@
 <!-- Script untuk grafik -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Ambil data dari tabel
-    const data = @json($data); // Mengambil data dari controller
+    // Ambil data dari controller (menggunakan @json untuk mengonversi data menjadi JSON)
+    const data = @json($data);
 
     // Filter data berdasarkan parameter
-    const temperatureData = data.filter(item => item.parameter === 'temperature');
-    const humidityData = data.filter(item => item.parameter === 'humidity');
-    const lightIntensityData = data.filter(item => item.parameter === 'light intensity');
+    const temperatureData = data.temperature || [];
+    const humidityData = data.humidity || [];
+    const lightIntensityData = data['light intensity'] || [];
 
     // Siapkan data untuk masing-masing grafik
     const temperatureLabels = temperatureData.map(item => new Date(item.created_at).toLocaleString());
@@ -91,13 +93,8 @@
                     legend: { display: false }
                 },
                 scales: {
-                    x: {
-                        display: false
-                    },
-                    y: {
-                        display: false,
-                        beginAtZero: true
-                    }
+                    x: { display: true },
+                    y: { display: true, beginAtZero: true }
                 }
             }
         });
